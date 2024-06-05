@@ -2,17 +2,23 @@
 
 include("config.php");
 
-$where_clause = "";
-if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-    $keyword = $_GET['keyword'];
-    $where_clause .= " WHERE judul_artikel LIKE '%$keyword%'";
-}
-if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
-    $kategori = $_GET['kategori'];
-    $where_clause .= ($where_clause == "") ? " WHERE" : " AND";
-    $where_clause .= " kategori_artikel.id_kategori = $kategori";
-}
 
+if (isset($_POST["add"])) {
+    $kategori = $_POST["nama_kategori"];
+
+    if (!empty($kategori)) {
+
+        $sql = "SELECT * FROM kategori_artikel WHERE nama_kategori = '$kategori'";
+        $result = mysqli_query($koneksi, $sql);
+
+        if (mysqli_num_rows($result) === 1) {
+            $error = true;
+        } else {
+            mysqli_query($koneksi, "INSERT INTO kategori_artikel(nama_kategori) VALUES('$kategori')");
+            header("location: kategoriArtikel.php");
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +77,15 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
             background-color: #f80000;
         }
 
-        .search {
+        .add_new {
             padding: 10px 20px;
             color: #ffffff;
             background-color: #0298cf;
-            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .add_new:hover {
+            background-color: teal;
         }
 
         input {
@@ -107,28 +117,15 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
             font-size: 15px;
         }
 
-        th {
-            border-bottom: 1px solid #dddddd;
-            padding: 10px 20px;
-            word-break: break-all;
-            text-align: center;
-
-        }
-
-        .category,
-        .aksi, .rate{
-            text-align: center;
-        }
-
-        .titel {
-            width: 200px;
-        }
-
+        th,
         td {
             border-bottom: 1px solid #dddddd;
             padding: 10px 20px;
             word-break: break-all;
+            text-align: center;
+
         }
+
 
 
         ::placeholder {
@@ -153,70 +150,62 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
 <body>
 
     <div class="sidebar">
-        <a class="active" href="halaman.php">Artikel</a>
-        <a href="pertanyaan.php">Pertanyaan</a>
-        <a href="topArtikel.php">TOP ARTIKEL</a>
-        <a href="topTen.php">TOP MEMBER</a>
+        <a href="dashboard.php">Artikel</a>
+        <a href="jenisTanaman.php">Tanaman</a>
+        <a class="active" href="kategriArtikel.php">Kategori Artikel</a>
+        <a href="kelolaPertanyaan.php">Daftar Pertanyaan</a>
+        <a href="kelolaJawaban.php">Daftar Jawaban</a>
         <a href="index.php">Log out</a>
     </div>
 
     <div class="content">
         <div class="table">
             <div class="table_header">
-                <h2>ARTIKEL</h2>
+                <p>List Kategori Artikel</p>
                 <div>
-                    <form action="halaman.php" method="GET">
-                        <input type="text" name="keyword" placeholder="Cari artikel...">
-                        <select name="kategori">
-                            <option value="">Semua Kategori</option>
-                            <?php
-                            $sql_kategori = "SELECT * FROM kategori_artikel";
-                            $query_kategori = mysqli_query($koneksi, $sql_kategori);
-                            while ($kategori = mysqli_fetch_array($query_kategori)) {
-                                echo "<option value='{$kategori["id_kategori"]}'>{$kategori["nama_kategori"]}</option>";
+                    <form action="kategoriArtikel.php" method="post">
+                        <input type="text" placeholder="kategori" name="nama_kategori">
+                        <input type="submit" class="add_new" name="add" value="+ add">
+                        <?php
+                        if (isset($_POST["add"])) {
+                            if ($error = true) {
+                                echo "jenis tanaman sudah dimasukan/kolom kosong";
+                                $error = false;
                             }
-                            ?>
-                        </select>
-                        <button class="search" type="submit">Cari & Filter</button>
+                        }
+                        ?>
                     </form>
-                    <a href="Halaman.php"><button class="add_new">+ add new</button></a>
                 </div>
             </div>
             <div class="table_section">
                 <table>
                     <thead>
                         <tr>
-                            <th>Judul Artikel</th>
-                            <th>Kategori</th>
-                            <th>Rating</th>
+                            <th>No</th>
+                            <th>Kategori Artikel</th>
                             <th>action</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <?php
-
-                        $sql = "SELECT artikel.*, kategori_artikel.nama_kategori, AVG(rating.nilai) AS avg_rating 
-                                FROM artikel 
-                                JOIN kategori_artikel ON artikel.id_kategori = kategori_artikel.id_kategori
-                                LEFT JOIN rating ON artikel.id_artikel = rating.id_artikel
-                                $where_clause
-                                GROUP BY artikel.id_artikel";
+                        $sql = "SELECT * FROM kategori_artikel";
                         $query = mysqli_query($koneksi, $sql);
+                        $i = 1;
 
-                        // Tampilkan hasil query
-                        while ($artikel = mysqli_fetch_array($query)) {
+                        while ($kategoriArtikel = mysqli_fetch_array($query)) {
                             echo "<tr>";
-                            echo "<td class='titel'>{$artikel['judul_artikel']}</td>";
-                            echo "<td class='category'>{$artikel['nama_kategori']}</td>";
-                            echo "<td class='rate'>" . number_format($artikel['avg_rating'], 2) . "</td>";
-                            echo "<td class='aksi'> 
-                            <a href='viewArtikel.php?id={$artikel["id_artikel"]}'><button class='edit'><i class='fa-regular fa-eye'></i></button></a>
+                            echo "<td>{$i}</td>";
+                            echo "<td>{$kategoriArtikel['nama_kategori']}</td>";
+
+
+                            echo "<td> 
+                            <a href='deleteTanaman.php?id={$kategoriArtikel["id_kategori"]}'><button class='delete'><i class='fa-solid fa-trash'></i></button></a>
                             </td>";
 
                             echo "</tr>";
+                            $i++;
                         }
-
                         ?>
 
 
