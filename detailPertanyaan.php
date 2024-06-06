@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $id_user_jawaban = $jawaban['id_user'];
 
-        $sql = "UPDATE pengguna SET quality_point = quality_point + 2 WHERE id = ?";
+        $sql = "UPDATE pengguna SET quality_points = quality_points + 2 WHERE id = ?";
         $stmt = mysqli_prepare($koneksi, $sql);
         mysqli_stmt_bind_param($stmt, "i", $id_user_jawaban);
         mysqli_stmt_execute($stmt);
