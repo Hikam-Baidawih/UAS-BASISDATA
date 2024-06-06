@@ -41,7 +41,7 @@ CREATE TABLE rating (
     id_rating INT AUTO_INCREMENT PRIMARY KEY,
     id_artikel INT NOT NULL,
     id_pengguna INT NOT NULL,
-    nilai INT,
+    nilai FLOAT,
     FOREIGN KEY (id_artikel) REFERENCES artikel(id_artikel),
     FOREIGN KEY (id_pengguna) REFERENCES pengguna(id)
 );
