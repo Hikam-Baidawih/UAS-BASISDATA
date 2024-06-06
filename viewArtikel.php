@@ -1,29 +1,29 @@
 <?php
 include("config.php");
 session_start();
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    $idArtikel = $_POST['id'];
-                    $rating = $_POST['rating'];
-                    $id_user = $_SESSION['id_user'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $idArtikel = $_POST['id'];
+    $rating = $_POST['rating'];
+    $id_user = $_SESSION['id_user'];
 
-                    // Periksa apakah artikel sudah pernah direview sebelumnya oleh pengguna
-                    $sql_check_review = "SELECT * FROM rating WHERE id_artikel = $idArtikel AND id_pengguna = $id_user";
-                    $result_check_review = mysqli_query($koneksi, $sql_check_review);
+    // Periksa apakah artikel sudah pernah direview sebelumnya oleh pengguna
+    $sql_check_review = "SELECT * FROM rating WHERE id_artikel = $idArtikel AND id_pengguna = $id_user";
+    $result_check_review = mysqli_query($koneksi, $sql_check_review);
 
-                    if (mysqli_num_rows($result_check_review) > 0) {
-                        // Jika sudah direview, lakukan update rating
-                        $sql_update_rating = "UPDATE rating SET nilai = ROUND((nilai + $rating) / 2, 2)  WHERE id_artikel = $idArtikel AND id_pengguna = $id_user";
-                        mysqli_query($koneksi, $sql_update_rating);
-                    } else {
-                        // Jika belum direview, lakukan penambahan rating baru
-                        $sql_insert_rating = "INSERT INTO rating (id_artikel, id_pengguna, nilai) VALUES ($idArtikel, $id_user, $rating)";
-                        mysqli_query($koneksi, $sql_insert_rating);
-                    }
+    if (mysqli_num_rows($result_check_review) > 0) {
+        // Jika sudah direview, lakukan update rating
+        $sql_update_rating = "UPDATE rating SET nilai = ROUND((nilai + $rating) / 2, 2)  WHERE id_artikel = $idArtikel AND id_pengguna = $id_user";
+        mysqli_query($koneksi, $sql_update_rating);
+    } else {
+        // Jika belum direview, lakukan penambahan rating baru
+        $sql_insert_rating = "INSERT INTO rating (id_artikel, id_pengguna, nilai) VALUES ($idArtikel, $id_user, $rating)";
+        mysqli_query($koneksi, $sql_insert_rating);
+    }
 
-                    // Redirect kembali ke halaman artikel setelah memberi rating
-                    header("Location: viewArtikel.php?id=$idArtikel");
-                    exit();
-                }
+    // Redirect kembali ke halaman artikel setelah memberi rating
+    header("Location: viewArtikel.php?id=$idArtikel");
+    exit();
+}
 
 
 $idArtikel = $_GET['id'];
@@ -135,9 +135,9 @@ $result = mysqli_query($koneksi, $sql);
 
     <div class="sidebar">
         <a class="active" href="halaman.php">Artikel</a>
-        <a href="jenisTanaman.php">Tanaman</a>
-        <a href="#contact">Daftar Pertanyaan</a>
-        <a href="#about">Daftar Jawaban</a>
+        <a href="pertanyaan.php">Pertanyaan</a>
+        <a href="topArtikel.php">TOP ARTIKEL</a>
+        <a href="topTen.php">TOP MEMBER</a>
         <a href="index.php">Log out</a>
     </div>
 
@@ -169,6 +169,6 @@ $result = mysqli_query($koneksi, $sql);
         </div>
     </div>
 
-    </body>
+</body>
 
 </html>
