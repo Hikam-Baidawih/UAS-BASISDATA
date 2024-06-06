@@ -1,6 +1,6 @@
 # UAS BASIS DATA SEMESTER 2 (Aplikasi Halo petani)
 
-Kontribusi : Membuat laporan proyek akhir dan canva
+
 
 - Latar Belakang Permasalahan
   Di zaman sekarang teknologi sudah sangat berkembang yang memudahkan kita untuk di berbagai sektor, salah satunya sektor perrtanian. Namun di sektor pertsnian masih ada yang menghadapi berbagai masalah dan memerlukan solusinya, tetapi para petani pasti kurang akses terhadap informasi dan saran yang relevan mengenai permasalahan yang mereka hadapi. Contoh permasalahan yang mereka hadapi seperti serangan hama, penyakit tanaman, kondisi pertumbuhan yang kurang optimal, atau bahkan para orang biasa yang bukan petani tetapi memerlukan saran untuk bisa memulai bercocok tanam dan memerlukan saran yang tepat. Dalam situai ini, berkonsultasi dengan ahli petanian atau petani lain yang sudah berpengalaman dapat menjadi solusi yang sangat efektif. Tetapi akses untung bisa berkonsultasi dengan ahli pertanian seringkali terbatas oleh geografiis dan relasi.
