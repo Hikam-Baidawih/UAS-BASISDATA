@@ -135,4 +135,3 @@ INSERT INTO laporan_pertanyaan (id_pertanyaan, id_user, tanggal) VALUES
 INSERT INTO laporan_jawaban (id_jawaban, id_user, tanggal) VALUES
 (1, 3, '2024-02-09'),
 (2, 1, '2024-02-10');
-
