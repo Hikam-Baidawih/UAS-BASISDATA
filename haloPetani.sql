@@ -96,7 +96,21 @@ INSERT INTO admin (nama_admin, password_admin) VALUES
 INSERT INTO pengguna (nama_lengkap, no_hp, password, quality_points, tanggal_gabung) VALUES
 ('User1', '081234567890', 'password1', 10, '2024-01-01'),
 ('User2', '081234567891', 'password2', 20, '2024-01-02'),
-('User3', '081234567892', 'password3', 30, '2024-01-03');
+('User3', '081234567892', 'password3', 30, '2024-01-03'),
+('User14', '081234567803', 'password14', 110, '2024-04-01'),
+('User15', '081234567804', 'password15', 120, '2024-04-10'),
+('User16', '081234567805', 'password16', 130, '2024-05-05'),
+('User17', '081234567806', 'password17', 140, '2024-05-15'),
+('User18', '081234567807', 'password18', 150, '2024-06-01'),
+('User19', '081234567808', 'password19', 160, '2024-06-10'),
+('User20', '081234567809', 'password20', 170, '2024-06-24'),
+('User21', '081234567810', 'password21', 180, '2024-06-25'),
+('User22', '081234567811', 'password22', 190, '2024-06-26'),
+('User23', '081234567812', 'password23', 200, '2024-06-27'),
+('User24', '081234567813', 'password24', 210, '2024-06-28'),
+('User25', '081234567814', 'password25', 220, '2024-06-29'),
+('User26', '081234567815', 'password26', 230, '2024-06-30');
+
 
 INSERT INTO tanaman (jenis_tanaman) VALUES
 ('Padi'),
