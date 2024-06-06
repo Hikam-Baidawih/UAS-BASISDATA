@@ -41,8 +41,7 @@
                                 echo"nomor HP sudah digunakan";
                             } else {
 
-                                    $hashing = password_hash($password1, PASSWORD_DEFAULT);
-                                    $sql = "INSERT INTO pengguna(nama_lengkap, no_hp, password) VALUES('$username', '$nomor', '$hashing')";
+                                    $sql = "INSERT INTO pengguna(nama_lengkap, no_hp, password, tanggal_gabung) VALUES('$username', '$nomor', '$password1', CURRENT_DATE())";
 
                                     mysqli_query($koneksi, $sql);
 
