@@ -64,11 +64,13 @@ CREATE TABLE jawaban (
     jawaban TEXT NOT NULL,
     id_user INT NOT NULL,
     likes INT DEFAULT 0,
+    rating INT DEFAULT 0,
     tanggal DATE NOT NULL,
 
     FOREIGN KEY (id_pertanyaan) REFERENCES pertanyaan(id_pertanyaan),
     FOREIGN KEY (id_user) REFERENCES pengguna(id)
 );
+
 
 
 CREATE TABLE laporan_pertanyaan (

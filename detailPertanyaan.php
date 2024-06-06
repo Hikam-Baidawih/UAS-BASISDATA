@@ -48,6 +48,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = mysqli_prepare($koneksi, $sql);
         mysqli_stmt_bind_param($stmt, "ii", $id, $_SESSION['id_user']);
         mysqli_stmt_execute($stmt);
+    } elseif (isset($_POST['rating'])) {
+        $id_jawaban = $_POST['id_jawaban'];
+        $rating = $_POST['rating'];
+        if($rating > 0){
+            $sql = "UPDATE jawaban SET rating = $rating WHERE id_jawaban = $id_jawaban";
+            mysqli_query($koneksi, $sql);
+        }else{
+
+            $sql = "UPDATE jawaban SET rating = (rating + $rating)/2 WHERE id_jawaban = $id_jawaban";
+            mysqli_query($koneksi, $sql);
+        }
     }
 }
 
@@ -267,7 +278,7 @@ $pertanyaan = mysqli_fetch_array($result);
                         <strong>{$jawaban['nama_lengkap']}:</strong>
                         <p>{$jawaban['jawaban']}</p>
                         <small>({$jawaban['tanggal']})</small>
-                        <small>Laporan: {$jawaban['laporan_count']}</small>
+                        <small>Rating: {$jawaban['rating']}</small>
                         <div class='actions'>
                             <form action='detailPertanyaan.php?id={$id_pertanyaan}' method='POST'>
                                 <input type='hidden' name='id_jawaban' value='{$jawaban['id_jawaban']}'>
@@ -277,6 +288,17 @@ $pertanyaan = mysqli_fetch_array($result);
                                 <input type='hidden' name='type' value='jawaban'>
                                 <input type='hidden' name='id' value='{$jawaban['id_jawaban']}'>
                                 <button type='submit' name='report' class='report'>Laporkan Jawaban</button>
+                            </form>
+                            <form action='detailPertanyaan.php?id={$id_pertanyaan}' method='POST'>
+                                <input type='hidden' name='id_jawaban' value='{$jawaban['id_jawaban']}'>
+                                <select name='rating' onchange='this.form.submit()'>
+                                    <option value='' disabled selected>Nilai Jawaban</option>
+                                    <option value='1'>1</option>
+                                    <option value='2'>2</option>
+                                    <option value='3'>3</option>
+                                    <option value='4'>4</option>
+                                    <option value='5'>5</option>
+                                </select>
                             </form>
                         </div>
                     </div>";
