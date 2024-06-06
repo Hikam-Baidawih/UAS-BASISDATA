@@ -161,6 +161,7 @@ include("config.php");
                         <tr>
                             <th>Judul Artikel</th>
                             <th>Kategori</th>
+                            <th>Tanggal</th>
                             <th>Rating</th>
                             <th>action</th>
                         </tr>
@@ -183,6 +184,7 @@ include("config.php");
                             echo "<tr>";
                             echo "<td class='titel'>{$artikel['judul_artikel']}</td>";
                             echo "<td class='category'>{$artikel['nama_kategori']}</td>";
+                            echo "<td class='date'>{$artikel['tanggal_artikel']}</td>";
                             echo "<td class='rate'>" . number_format($artikel['avg_rating'], 2) . "</td>";
                             echo "<td class='aksi'> 
                             <a href='viewArtikel.php?id={$artikel["id_artikel"]}'><button class='edit'><i class='fa-regular fa-eye'></i></button></a>

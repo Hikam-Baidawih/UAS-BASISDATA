@@ -3,6 +3,9 @@
 include("config.php");
 
 $where_clause = "";
+$having_clause = "";
+$order_clause = "ORDER BY artikel.tanggal_artikel DESC"; // Default ordering
+
 if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
     $keyword = $_GET['keyword'];
     $where_clause .= " WHERE judul_artikel LIKE '%$keyword%'";
@@ -12,6 +15,30 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
     $where_clause .= ($where_clause == "") ? " WHERE" : " AND";
     $where_clause .= " kategori_artikel.id_kategori = $kategori";
 }
+if (isset($_GET['urutkan_tanggal']) && !empty($_GET['urutkan_tanggal'])) {
+    $urutkan_tanggal = $_GET['urutkan_tanggal'];
+    if ($urutkan_tanggal == "terbaru") {
+        $order_clause = "ORDER BY artikel.tanggal_artikel DESC";
+    } elseif ($urutkan_tanggal == "terlama") {
+        $order_clause = "ORDER BY artikel.tanggal_artikel ASC";
+    }
+}
+if (isset($_GET['rating']) && !empty($_GET['rating'])) {
+    $rating = $_GET['rating'];
+    $having_clause .= " HAVING avg_rating <= $rating";
+    $order_clause .= ", avg_rating DESC"; // Add this line to sort by rating when filter is applied
+}
+
+$sql = "SELECT artikel.*, kategori_artikel.nama_kategori, AVG(rating.nilai) AS avg_rating 
+        FROM artikel 
+        JOIN kategori_artikel ON artikel.id_kategori = kategori_artikel.id_kategori
+        LEFT JOIN rating ON artikel.id_artikel = rating.id_artikel
+        $where_clause
+        GROUP BY artikel.id_artikel
+        $having_clause
+        $order_clause";
+
+$query = mysqli_query($koneksi, $sql);
 
 ?>
 
@@ -25,7 +52,6 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         <?php
-
         include("aset/sidebar.css");
         ?>* {
             margin: 0;
@@ -167,6 +193,24 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
                 <div>
                     <form action="halaman.php" method="GET">
                         <input type="text" name="keyword" placeholder="Cari artikel...">
+                        <select name="rating">
+                            <option value="">Berdasarkan Rating</option>
+                            <option value="10"><=10</option>
+                            <option value="9"><=9</option>
+                            <option value="8"><=8</option>
+                            <option value="7"><=7</option>
+                            <option value="6"><=6</option>
+                            <option value="5"><=5</option>
+                            <option value="4"><=4</option>
+                            <option value="3"><=3</option>
+                            <option value="2"><=2</option>
+                            <option value="1"><=1</option>
+                        </select>
+                        <select name="urutkan_tanggal">
+                            <option value="">Berdasarkan Waktu</option>
+                            <option value="terbaru">Terbaru</option>
+                            <option value="terlama">Terlama</option>
+                        </select>
                         <select name="kategori">
                             <option value="">Semua Kategori</option>
                             <?php
@@ -179,7 +223,7 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
                         </select>
                         <button class="search" type="submit">Cari & Filter</button>
                     </form>
-                    <a href="Halaman.php"><button class="add_new">+ add new</button></a>
+
                 </div>
             </div>
             <div class="table_section">
@@ -188,28 +232,22 @@ if (isset($_GET['kategori']) && !empty($_GET['kategori'])) {
                         <tr>
                             <th>Judul Artikel</th>
                             <th>Kategori</th>
+                            <th>Tanggal</th>
                             <th>Rating</th>
-                            <th>action</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <?php
-
-                        $sql = "SELECT artikel.*, kategori_artikel.nama_kategori, AVG(rating.nilai) AS avg_rating 
-                                FROM artikel 
-                                JOIN kategori_artikel ON artikel.id_kategori = kategori_artikel.id_kategori
-                                LEFT JOIN rating ON artikel.id_artikel = rating.id_artikel
-                                $where_clause
-                                GROUP BY artikel.id_artikel";
-                        $query = mysqli_query($koneksi, $sql);
-
                         // Tampilkan hasil query
                         while ($artikel = mysqli_fetch_array($query)) {
                             echo "<tr>";
                             echo "<td class='titel'>{$artikel['judul_artikel']}</td>";
                             echo "<td class='category'>{$artikel['nama_kategori']}</td>";
+                            echo "<td class='category'>{$artikel['tanggal_artikel']}</td>";
                             echo "<td class='rate'>" . number_format($artikel['avg_rating'], 2) . "</td>";
+                            
                             echo "<td class='aksi'> 
                             <a href='viewArtikel.php?id={$artikel["id_artikel"]}'><button class='edit'><i class='fa-regular fa-eye'></i></button></a>
                             </td>";

@@ -187,7 +187,6 @@ $query = mysqli_query($koneksi, $sql);
                     <tbody>
 
                         <?php
-
                         // Tampilkan hasil query
                         while ($user = mysqli_fetch_array($query)) {
                             echo "<tr>";
