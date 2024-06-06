@@ -182,7 +182,6 @@ $query = mysqli_query($koneksi, $sql);
                         <tr>
                             <th>Nama Lengkap</th>
                             <th>Quality Points</th>
-                            <th>Tanggal Gabung</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,7 +193,6 @@ $query = mysqli_query($koneksi, $sql);
                             echo "<tr>";
                             echo "<td class='titel'>{$user['nama_lengkap']}</td>";
                             echo "<td class='category'>{$user['quality_points']}</td>";
-                            echo "<td class='category'>{$user['tanggal_gabung']}</td>";
                             echo "</tr>";
                         }
 
