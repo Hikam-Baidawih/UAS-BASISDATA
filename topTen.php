@@ -1,9 +1,25 @@
 <?php
-
 include("config.php");
 
+// Default filter (all-time)
+$filter = 'all';
 
+// Check if filter is set
+if (isset($_GET['filter'])) {
+    $filter = $_GET['filter'];
+}
 
+$sql = "SELECT nama_lengkap, quality_points, tanggal_gabung FROM pengguna";
+
+// Apply filter based on the selected option
+if ($filter == 'weekly') {
+    $sql .= " WHERE tanggal_gabung >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)";
+} elseif ($filter == 'monthly') {
+    $sql .= " WHERE tanggal_gabung >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
+}
+
+$sql .= " ORDER BY quality_points DESC LIMIT 10";
+$query = mysqli_query($koneksi, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -12,13 +28,10 @@ include("config.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Top Users</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        <?php
-
-        include("aset/sidebar.css");
-        ?>* {
+        <?php include("aset/sidebar.css"); ?>* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -122,7 +135,6 @@ include("config.php");
             word-break: break-all;
         }
 
-
         ::placeholder {
             color: #0298cf;
         }
@@ -154,6 +166,16 @@ include("config.php");
 
     <div class="content">
         <div class="table">
+            <div class="table_header">
+                <form action="topTen.php" method="GET">
+                    <label for="filter">Filter: </label>
+                    <select name="filter" id="filter" onchange="this.form.submit()">
+                        <option value="all" <?php if ($filter == 'all') echo 'selected'; ?>>All Time</option>
+                        <option value="weekly" <?php if ($filter == 'weekly') echo 'selected'; ?>>Weekly</option>
+                        <option value="monthly" <?php if ($filter == 'monthly') echo 'selected'; ?>>Monthly</option>
+                    </select>
+                </form>
+            </div>
             <div class="table_section">
                 <table>
                     <thead>
@@ -165,19 +187,13 @@ include("config.php");
                     <tbody>
 
                         <?php
-
-                        $sql = "SELECT nama_lengkap, quality_point FROM PENGGUNA ORDER BY quality_point DESC LIMIT 10";
-                        $query = mysqli_query($koneksi, $sql);
-
                         // Tampilkan hasil query
                         while ($user = mysqli_fetch_array($query)) {
                             echo "<tr>";
                             echo "<td class='titel'>{$user['nama_lengkap']}</td>";
-                            echo "<td class='category'>{$user['quality_point']}</td>";
-
+                            echo "<td class='category'>{$user['quality_points']}</td>";
                             echo "</tr>";
                         }
-
 
                         ?>
 

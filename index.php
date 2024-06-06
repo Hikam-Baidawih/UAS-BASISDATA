@@ -13,7 +13,7 @@
 			$baris = mysqli_fetch_assoc($result);
 			
 			
-			if (password_verify($password, $baris["password"])) {
+			if ($password == $baris['password']) {
 			$_SESSION['id_user'] = $baris['id'];
 				header("location: Halaman.php");
 			}

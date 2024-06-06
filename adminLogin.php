@@ -12,7 +12,7 @@ if (isset($_POST["login"])) {
     if (mysqli_num_rows($result) === 1) {
         $baris = mysqli_fetch_assoc($result);
 
-        if (password_verify($password, $baris["password_admin"])) {
+        if ($password == $baris["password_admin"]) {
             header("location: dashboard.php");
         }
     }
