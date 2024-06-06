@@ -35,10 +35,10 @@
                             $username = $_POST["username"];
                             $password1 = $_POST["password"];
                             $nomor = $_POST["nomorHp"];
-                            $result = mysqli_query($koneksi,"SELECT no_hp FROM pengguna WHERE no_hp = '$nomor'");
+                            $result = mysqli_query($koneksi,"SELECT nama_lengkap FROM pengguna WHERE nama_lengkap = '$username'");
 
                             if (mysqli_fetch_assoc($result)) {
-                                echo"nomor HP sudah digunakan";
+                                echo"username sudah digunakan";
                             } else {
 
                                     $sql = "INSERT INTO pengguna(nama_lengkap, no_hp, password, tanggal_gabung) VALUES('$username', '$nomor', '$password1', CURRENT_DATE())";
