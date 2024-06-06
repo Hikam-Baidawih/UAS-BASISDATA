@@ -166,14 +166,14 @@ include("config.php");
 
                         <?php
 
-                        $sql = "SELECT nama_lengkap, quality_points FROM PENGGUNA ORDER BY quality_points DESC LIMIT 10";
+                        $sql = "SELECT nama_lengkap, quality_point FROM PENGGUNA ORDER BY quality_point DESC LIMIT 10";
                         $query = mysqli_query($koneksi, $sql);
 
                         // Tampilkan hasil query
                         while ($user = mysqli_fetch_array($query)) {
                             echo "<tr>";
                             echo "<td class='titel'>{$user['nama_lengkap']}</td>";
-                            echo "<td class='category'>{$user['quality_points']}</td>";
+                            echo "<td class='category'>{$user['quality_point']}</td>";
 
                             echo "</tr>";
                         }
