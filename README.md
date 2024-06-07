@@ -9,6 +9,8 @@
   Solusi dari permasalahan tersebut kami membuat website Halo Petani yang bisa mempermudah para petani untuk bisa berkonsultasi mengenai permasalahan yang mereka hadapi dan berkonsultasi dengan ahli pertanian atau dengan petani lainnya yang sudah berpengalaman. Dengan website ini kami menyediakan fitur untuk bisa para pengguna memposting pertanyaan lengkap dengan foto, serta mengkategotikan pertanyaan berdasarkan jenis tanaman. Para petani juga bisa menjawab pertanyaan dari petani lain yang mungkin sudah berpengalaman dalam masalah yang dihadapi petani lain. Petani juga bisa melihat berbagai artikel di website ini untuk mendukung solusi dari permasalahan yang mereka hadapi.
     Dengan adanya Halo Petani ini para petani diharapkan dapat  memperoleh informasi yang mereka butuhkan dengan cepat, berbagi pengetahuan dengan sesama petani, dan meningkatkan produktivitas dan efensiensi dalam mengelola pertanian mereka dan menjadi solusi yang praktis.
 
+Anggota kami yang bernama Sunan berpartisipasi sangat kurang, bahkan tidak mengerjakan tugas apapun
+
 
 
   
