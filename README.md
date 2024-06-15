@@ -11,6 +11,9 @@
 
 Anggota kami yang bernama Sunan berpartisipasi sangat kurang, bahkan tidak mengerjakan tugas apapun
 
+googel drive laporan:
+https://drive.google.com/file/d/15BQSXgeFhXoZWRp_LcsS_AOwRgnoVDvS/view?usp=drive_link
+
 
 
   
